@@ -10,10 +10,10 @@ import matplotlib.pyplot as plt
 from Investar import Analyzer
 
 mk = Analyzer.MarketDB()
-stocks = ['삼성전자', 'SK하이닉스', '현대자동차', 'NAVER']                                   #여기에 주식 선택해 작성 후 코드 실행
+stocks = list(input('종목을 입력하세요. 종목은 띄어쓰기로 구분합니다. (예시: 삼성전자 SK하이닉스 현대자동차 NAVER)\n:').split())
 df = pd.DataFrame()
 for s in stocks:
-    df[s] = mk.get_daily_price(s, '2019-01-01', '2022-08-21')['close']                      #데이터 업데이트 상황
+    df[s] = mk.get_daily_price(s, '2019-01-01', '2022-08-21')['close']
   
 daily_ret = df.pct_change() 
 annual_ret = daily_ret.mean() * 252
@@ -45,6 +45,8 @@ df = df[['Returns', 'Risk', 'Sharpe'] + [s for s in stocks]]  # ②
 
 max_sharpe = df.loc[df['Sharpe'] == df['Sharpe'].max()]  # ③
 min_risk = df.loc[df['Risk'] == df['Risk'].min()]  # ④
+max_sharpe_returns = float(max_sharpe['Returns'])
+min_risk_returns = float(min_risk['Returns'])
 
 df.plot.scatter(x='Risk', y='Returns', c='Sharpe', cmap='viridis',
     edgecolors='k', figsize=(11,7), grid=True)  # ⑤
@@ -57,7 +59,5 @@ plt.xlabel('Risk')
 plt.ylabel('Expected Returns') 
 plt.show() 
 
-print(df)
 print(max_sharpe)
 print(min_risk)
-
