@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[ ]:
-
-
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -40,12 +34,12 @@ for _ in range(20000):
 portfolio = {'Returns': port_ret, 'Risk': port_risk, 'Sharpe': sharpe_ratio}
 for i, s in enumerate(stocks): 
     portfolio[s] = [weight[i] for weight in port_weights] 
-df = pd.DataFrame(portfolio) 
+df = pd.DataFrame(portfolio)                                                    #데이터 프레임 하나 생성
 df = df[['Returns', 'Risk', 'Sharpe'] + [s for s in stocks]]  # ② 
 
-max_sharpe = df.loc[df['Sharpe'] == df['Sharpe'].max()]  # ③
-min_risk = df.loc[df['Risk'] == df['Risk'].min()]  # ④
-max_sharpe_returns = float(max_sharpe['Returns'])
+max_sharpe = df.loc[df['Sharpe'] == df['Sharpe'].max()]  # ③                    
+min_risk = df.loc[df['Risk'] == df['Risk'].min()]  # ④                          
+max_sharpe_returns = float(max_sharpe['Returns'])                               
 min_risk_returns = float(min_risk['Returns'])
 
 df.plot.scatter(x='Risk', y='Returns', c='Sharpe', cmap='viridis',
@@ -59,5 +53,5 @@ plt.xlabel('Risk')
 plt.ylabel('Expected Returns') 
 plt.show() 
 
-print(max_sharpe)
-print(min_risk)
+print(max_sharpe)                                               # 샤프지수가 제일 높은 값 출력
+print(min_risk)                                                 # 리스크가 낮은 값 출력
